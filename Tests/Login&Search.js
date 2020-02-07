@@ -6,6 +6,13 @@ describe('Sapphire', function() {
 	var EC = protractor.ExpectedConditions;
 	
 	browser.ignoreSynchronization=true;
+
+	//setup method - Should be outside of it block
+	/*beforeEach(function(){
+		obj.getURL();
+		browser.sleep(10000);
+	})
+	*/
 	
 	it('Login functionality', function() 
 	{			
@@ -69,8 +76,11 @@ describe('Sapphire', function() {
 	
 	
 	it('Opening client', function() {
-	
+
 			browser.wait(EC.presenceOf(obj.viewClient),10000);
+
+			browser.sleep(3000);
+
 			obj.viewClient.click(); //Clicking on 'View client' button
 				
 			// Switching to Client tab

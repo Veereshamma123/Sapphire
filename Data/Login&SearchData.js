@@ -1,28 +1,22 @@
 module.exports=
 {
 
-Datadriven:
-{
-		
-	FirstData: 
+	LoginData: 
 	{
-		firstinput:"2",
-		secondinput:"3",
-		result:"5"
+		username:"veereshamma.kake@syndigo.com",
+		password:"VEERU123$",
+		title:"Sapphire"
 	},
 
-	SecondData: 
+	Search:
 	{
-		firstinput:"3",
-		secondinput:"4",
-		result:"7"
+		projectId:"2899"
 	},
-
-	ThirdData: 
+	
+	OpenClient:
 	{
-		firstinput:"4",
-		secondinput:"5",
-		result:"9"
+		clientName:"Speedway"
 	}
-}
+
+
 }

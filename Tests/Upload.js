@@ -1,31 +1,35 @@
+describe('Upload', function() {
+	
+var d=require("./../Data/UploadData.js");
+var obj=require("./../PageObjects/UploadObjects.js");
+//var using=require('jasmine-data-provider'); // For using data driven testing
 var path = require('path');
 var EC = protractor.ExpectedConditions;
 
 it('Upload store locations', function() {
 		
-	element(by.id('menu_StoreLocations')).click(); //Clicking on 'Store locations' button
+	obj.storeLocations.click(); //Clicking on 'Store locations' button
 	browser.sleep(3000);
 	
-	element(by.id('btn_ImportStores')).click(); //Clicking on 'Upload' button
+	obj.uploadButton.click(); //Clicking on 'Upload' button
 	browser.sleep(3000);
 	
-	var fileToUpload = 'D:/Store.csv',
-    absolutePath = path.resolve(fileToUpload);
+	//var fileToUpload = 'D:/Backup/softwares/Store.csv',
+    absolutePath = path.resolve(d.UploadData.fileToUpload);
 
     var remote = require('C:\\Users\\anupama.gajjala\\AppData\\Roaming\\npm\\node_modules\\protractor\\node_modules\\selenium-webdriver\\remote');
     browser.setFileDetector(new remote.FileDetector());
 
-    
-	element(by.css('input[type="file"]')).sendKeys(absolutePath);   //Clicking on 'Browse' area
+    obj.browse.sendKeys(absolutePath);   //Clicking on 'Browse' area
 	browser.sleep(3000);
-	element(by.className("mat-raised-button mat-primary")).click(); //Clicking on Import button
+	obj.importButton.click(); //Clicking on Import button
 	
-	browser.wait(EC.presenceOf(element(by.css("div[class='snack-bar-text']"))),10000);
+	browser.wait(EC.presenceOf(obj.toastMessage),10000);
 	
-	element(by.css("div[class='snack-bar-text']")).getText().then(function(text)
+	obj.toastMessage.getText().then(function(text)
 	{
 		
-		if(text=="Upload Successful!")
+		if(text==d.UploadData.message)
 		{
 			console.log("File Uploaded successfully");
 		}
@@ -35,6 +39,8 @@ it('Upload store locations', function() {
 		}
 	})
 		
-	expect(element(by.css("div[class='snack-bar-text']")).isDisplayed()).toBe(true);
+	expect(obj.toastMessage.getText()).toBe(d.UploadData.message);
 	browser.sleep(3000);
 });
+
+})

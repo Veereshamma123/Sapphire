@@ -5,7 +5,7 @@ exports.config = {
   //If we want to run in chrome browser, no need to specify selenium address and no need to start server. But, need to specify selenium address for running in other browser. Otherwise, behavior will not be consistent
   //Running the code without starting selenium server is called as 'Direct Connect' --> directConnect: true
  // seleniumAddress: 'http://localhost:4444/wd/hub', //Need to comment when we are running with package.json
-  specs: ['Tests/Login&Search.js'],
+  specs: ['Tests/Login&Search.js','Tests/Upload.js'],
   
   //Global pre-requisite for all the test cases in a project, it will run before the execution of all the spec files
   onPrepare: function(){

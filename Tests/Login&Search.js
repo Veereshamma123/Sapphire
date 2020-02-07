@@ -1,13 +1,14 @@
 describe('Sapphire', function() {
   
-	//var data=require("./../Data/Login&SearchData.js");
+	var d=require("./../Data/Login&SearchData.js");
 	var obj=require("./../PageObjects/Login&SearchObjects.js");
 	var using=require('jasmine-data-provider'); // For using data driven testing
+	var EC = protractor.ExpectedConditions;
 	
 	browser.ignoreSynchronization=true;
 	
-	it('Login functionality', function() {
-		
+	it('Login functionality', function() 
+	{			
 		obj.getURL();
 		browser.sleep(10000);
 		
@@ -15,10 +16,11 @@ describe('Sapphire', function() {
 		
 		obj.loginButton.click(); //Clicking on 'LOG IN AT SYNDIGO.COM' button
 		browser.sleep(3000);
-		obj.emailId.sendKeys('veereshamma.kake@syndigo.com'); //Entering email id
+	
+		obj.emailId.sendKeys(d.LoginData.username); //Entering email id
 		obj.nextButton.click(); //Clicking on 'Next button' after entering email id 
 		browser.sleep(1000);
-		obj.password.sendKeys('VEERU123$'); //Entering password
+		obj.password.sendKeys(d.LoginData.password); //Entering password
 		browser.sleep(1000);
 		obj.signIn.click(); //Clicking on 'Sign in' button after entering password
 		browser.sleep(3000);
@@ -28,31 +30,28 @@ describe('Sapphire', function() {
 		obj.title.getText().then(function (text) {
 			console.log(text); //For Sapphire title
 		})
-		expect(obj.title.isDisplayed()).toBe(true); //Login successful
+		expect(obj.title.getText()).toBe(d.LoginData.title); //Login successful
 		browser.sleep(3000);
-		
+			
 	});
 	
 			
-	/*it('Search functionality', function() {
-		
-			var projectId = "2899";
+	it('Search functionality', function() {
 			
-			element(by.className("mat-tab-labels")).element(by.css("div:nth-child(2)")).click(); //Navigating to 'Current projects' tab
+			obj.currentProjects.click(); //Navigating to 'Current projects' tab
 			browser.sleep(3000);
 			
-			element(by.id('txt_FilterProjects')).sendKeys(projectId); //Entering project name in Filter
+			obj.filter.sendKeys(d.Search.projectId); //Entering project name in Filter
 			browser.sleep(2000);
 			
 			//Verifying whether the selected project is opened or not
-			if(element(by.css("tbody tr")).isPresent()) //multiple records exists which contains the search criteria
+			if(obj.rows.isPresent()) //multiple records exists which contains the search criteria
 			{
-			//Verifying whether the created record exists or not in the tabular form
-				element.all(by.css("tbody tr")).each(function(store)
+				obj.allRows.each(function(store)
 				{
 					store.element(by.css("td:nth-child(2)")).getText().then(function(text)
 					{
-						if(text==projectId)
+						if(text==d.Search.projectId)
 						{
 							console.log(text+ " - Project id is found");
 							
@@ -61,9 +60,9 @@ describe('Sapphire', function() {
 				})
 			} 
 			
-			expect(element(by.css("tbody tr td:nth-child(2)")).getText()).toBe(projectId);
+			expect(obj.projectId.getText()).toBe(d.Search.projectId);
 			
-			element(by.id('dark-gray')).click(); // Icon to open the project
+			obj.openIcon.click(); // Icon to open the project
 			browser.sleep(3000);
 		
 	});
@@ -71,11 +70,9 @@ describe('Sapphire', function() {
 	
 	it('Opening client', function() {
 	
-			var clientName = 'Speedway';
-		
-			browser.sleep(3000);
-			element(by.id('btn_ViewClient')).click(); //Clicking on 'View client' button
-						
+			browser.wait(EC.presenceOf(obj.viewClient),10000);
+			obj.viewClient.click(); //Clicking on 'View client' button
+				
 			// Switching to Client tab
 			browser.getAllWindowHandles().then(function (handles)
 			{
@@ -85,17 +82,17 @@ describe('Sapphire', function() {
 				})
 			}); 
 			
-			browser.sleep(3000);
+			browser.wait(EC.presenceOf(obj.clientName),10000);
 			
 			//Verifying whether the selected client is opened or not
-			element(by.css("div[class='menu-panel-header'] div div span")).getText().then(function(text)
+			obj.clientName.getText().then(function(text)
 			{
 				console.log("Navigated to the selected client : " +text);
 			})	
-			expect(element(by.css("div[class='menu-panel-header'] div div span")).getText()).toEqual(clientName);
+			expect(obj.clientName.getText()).toEqual(d.OpenClient.clientName);
 			
-			browser.sleep(5000);
+			browser.sleep(3000);
 		
-	})*/
+	})
 		
 })  

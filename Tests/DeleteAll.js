@@ -1,9 +1,12 @@
 describe('DeleteAll functionality', function(){
 
+var obj=require("./../PageObjects/DeleteAllObjects.js");
+var EC = protractor.ExpectedConditions;
+	
 function deleteAll()
 {
 	
-	if(element(by.cssContainingText("div[class='mat-paginator-range-actions'] div[class='mat-paginator-range-label']", "0 of 0")).isPresent()) //multiple records exists
+	if(obj.recordsCount.isPresent())
 	{
 		console.log("All locations are deleted successfully");
 		browser.sleep(5000);
@@ -17,26 +20,30 @@ function deleteAll()
 	
 it('DeleteAll store locations', function(){
 	
-	browser.wait(EC.presenceOf(element(by.id('menu_Locations'))),5000);
-	element(by.id('menu_Locations')).click(); //Clicking on 'Locations' button
+	browser.wait(EC.presenceOf(obj.locations),5000);
+	obj.locations.click(); //Clicking on 'Locations' button
 	browser.sleep(3000);
 	
 	//Delete All records 
-	element(by.id('btn_ClearAll')).click(); //Clicking on 'Delete All' button
+	obj.deleteAllButton.click(); //Clicking on 'Delete All' button
 	browser.sleep(3000);
 	
 	//DeleteAll pop-up
-	var deleteAllPopup = element(by.className("cdk-overlay-pane"));
+	var deleteAllPopup = obj.popup;
 	browser.wait(EC.presenceOf(deleteAllPopup),10000);
 	deleteAllPopup.getText().then(function(text) {
 		console.log(text);
 		
 		//Clicking on 'Yes' button from 'DeleteAll locations' pop-up
-		element(by.css("div[class='confirmation-dialog-actions mat-dialog-actions']")).element(by.css("button:nth-child(2)")).click();
-				
-		expect(element(by.cssContainingText("div[class='mat-paginator-range-actions'] div[class='mat-paginator-range-label']", "0 of 0")).isDisplayed()).toBe(true);
-		browser.sleep(3000);
+		obj.yesButton.click();
 		
+		browser.wait(EC.presenceOf(obj.recordsCount),5000);
+		obj.recordsCount.getText().then(function(text)
+		{
+			console.log(text);
+		})
+		expect(obj.recordsCount.isDisplayed()).toBe(true);
+			
 		deleteAll();
 		browser.sleep(3000);
 		

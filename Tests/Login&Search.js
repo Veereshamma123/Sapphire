@@ -2,17 +2,10 @@ describe('Sapphire', function() {
   
 	var d=require("./../Data/Login&SearchData.js");
 	var obj=require("./../PageObjects/Login&SearchObjects.js");
-	var using=require('jasmine-data-provider'); // For using data driven testing
+//	var using=require('jasmine-data-provider'); // For using data driven testing
 	var EC = protractor.ExpectedConditions;
 	
 	browser.ignoreSynchronization=true;
-
-	//setup method - Should be outside of it block
-	/*beforeEach(function(){
-		obj.getURL();
-		browser.sleep(10000);
-	})
-	*/
 	
 	it('Login functionality', function() 
 	{			
@@ -37,7 +30,7 @@ describe('Sapphire', function() {
 		obj.title.getText().then(function (text) {
 			console.log(text); //For Sapphire title
 		})
-		expect(obj.title.getText()).toBe(d.LoginData.title); //Login successful
+		expect(obj.title.getText()).toEqual(d.LoginData.title); //Login successful
 		browser.sleep(3000);
 			
 	});
@@ -45,6 +38,7 @@ describe('Sapphire', function() {
 			
 	it('Search functionality', function() {
 			
+			browser.wait(EC.presenceOf(obj.currentProjects),10000);
 			obj.currentProjects.click(); //Navigating to 'Current projects' tab
 			browser.sleep(3000);
 			
@@ -61,7 +55,6 @@ describe('Sapphire', function() {
 						if(text==d.Search.projectId)
 						{
 							console.log(text+ " - Project id is found");
-							
 						}
 					})
 				})
@@ -78,9 +71,6 @@ describe('Sapphire', function() {
 	it('Opening client', function() {
 
 			browser.wait(EC.presenceOf(obj.viewClient),10000);
-
-			browser.sleep(3000);
-
 			obj.viewClient.click(); //Clicking on 'View client' button
 				
 			// Switching to Client tab
@@ -88,20 +78,26 @@ describe('Sapphire', function() {
 			{
 				browser.switchTo().window(handles[1]);
 				browser.getTitle().then(function(title){
-					console.log("Title of the switched window is " +title);
+				console.log("Title of the switched window is " +title);
+				
+				browser.wait(EC.presenceOf(obj.clientName),20000);
+				browser.sleep(3000);
+				
+				//Verifying whether the selected client is opened or not
+				expect(obj.clientName.getText().isDisplayed()).toBe(true);
+				obj.clientName.getText().then(function(text)
+				{
+					console.log("Navigated to the selected client : " +text);
+					expect(obj.clientName.getText()).toBe(d.OpenClient.clientName);
+				})
+				
+				browser.sleep(3000);
+					
+					
 				})
 			}); 
 			
-			browser.wait(EC.presenceOf(obj.clientName),10000);
 			
-			//Verifying whether the selected client is opened or not
-			obj.clientName.getText().then(function(text)
-			{
-				console.log("Navigated to the selected client : " +text);
-			})	
-			expect(obj.clientName.getText()).toEqual(d.OpenClient.clientName);
-			
-			browser.sleep(3000);
 		
 	})
 		

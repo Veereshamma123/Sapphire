@@ -10,6 +10,18 @@
     "jasmine": {
       
     },
+    "node": {
+      
+    },
+    "lint": {
+      
+    },
+    "angular1": {
+      
+    },
+    "node-extension": {
+      
+    },
     "protractor": {
       
     }

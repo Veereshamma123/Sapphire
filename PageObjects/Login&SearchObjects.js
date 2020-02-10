@@ -27,8 +27,8 @@ function loginSearch()
 	
 	
 	//Opening client
-	this.viewClient=element(by.css("div button[class='view-client-button mat-stroked-button']")); 
-	this.clientName=element(by.css("div[class='menu-panel-header'] div div span"));
+	this.viewClient=element(by.id("btn_ViewClient"));
+	this.clientName=element(by.xpath("/html/body/app-root/app-layout/app-loader/div/div/div[2]/app-sidenav/mat-sidenav-container/mat-sidenav-content/div/app-client-details-layout/app-inner-side-nav-layout/div/div[2]/app-inner-side-nav/div/div[1]/div/div/span"));
 	
 };
 

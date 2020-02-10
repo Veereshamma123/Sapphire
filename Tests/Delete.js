@@ -1,23 +1,26 @@
 describe('Delete functionality', function(){
 
+var d=require("./../Data/DeleteData.js");
+var obj=require("./../PageObjects/DeleteObjects.js");	
 var EC = protractor.ExpectedConditions;
 	
-function deleteItem(storeid)
+function deleteItem()
 {
-	element(by.id('txt_Filter')).clear().sendKeys(storeid); //Entering the id in Filter
+	obj.filter.clear().sendKeys(d.Deleting.storeId); //Entering the id in Filter
 	browser.sleep(5000);
 	
-	element(by.css("button[mattooltip='Reload']")).click(); //Clicking on 'Reload' button
+	obj.reload.click(); //Clicking on 'Reload' button
 	browser.sleep(3000);
 	
-	if(element(by.css("tbody tr")).isPresent()) //multiple records exists which contains the search criteria
+	if(obj.rows.isPresent()) //multiple records exists which contains the search criteria
 	{
 	//Verifying whether the created record exists or not in the tabular form
-		element.all(by.css("tbody tr")).each(function(store)
+		obj.allRows.each(function(store)
 		{
 			store.element(by.css("td:nth-child(2)")).getText().then(function(text)
 			{
-				if(text==storeid)
+				
+				if(text==d.Deleting.storeId)
 				{
 					console.log(text+ "Store id is found for performing delete operation");
 					
@@ -37,30 +40,28 @@ function deleteItem(storeid)
 
 it('Delete store location', function(){
 	
-	var storeid = 114;
-	browser.sleep(1000);
-	browser.wait(EC.presenceOf(element(by.id('menu_StoreLocations'))),5000);
-	element(by.id('menu_StoreLocations')).click(); //Clicking on 'Store locations' button
+	browser.wait(EC.presenceOf(obj.storeLocations),5000);
+	obj.storeLocations.click(); //Clicking on 'Store locations' button
 		
-	deleteItem(storeid);
+	deleteItem();
 	
 	//Delete pop-up 
-	var deletePopup = element(by.className("cdk-overlay-pane"));
+	var deletePopup = obj.popup;
 	
 	browser.wait(EC.presenceOf(deletePopup),10000);
 	deletePopup.getText().then(function(text) {
 		console.log(text);
 		//Clicking on 'Yes' button from  the 'Delete location?' pop-up
-		element(by.css("div[class='confirmation-dialog-actions mat-dialog-actions']")).element(by.css("button:nth-child(2)")).click();
+		obj.yesButton.click();
 				
-		browser.wait(EC.presenceOf(element(by.cssContainingText("div[class='snack-bar-text']", "Location deleted."))),10000);
+		browser.wait(EC.presenceOf(obj.toastMessage),10000);
 		
-		element(by.cssContainingText("div[class='snack-bar-text']", "Location deleted.")).getText().then(function(text)
+		obj.toastMessage.getText().then(function(text)
 		{
 			console.log(text);
 		})
 			
-		expect(element(by.cssContainingText("div[class='snack-bar-text']", "Location deleted.")).isDisplayed()).toBe(true);
+		expect(obj.toastMessage.isDisplayed()).toBe(true);
 		browser.sleep(3000);
 		
 	})

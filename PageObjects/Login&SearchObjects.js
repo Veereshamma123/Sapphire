@@ -15,7 +15,6 @@ function loginSearch()
 		console.log("Hitting the browser");
 	};
 	
-	
 	//Search functionality
 	this.currentProjects=element(by.className("mat-tab-labels")).element(by.css("div:nth-child(2)"));
 	this.filter=element(by.id('txt_FilterProjects'));

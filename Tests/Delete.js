@@ -1,12 +1,14 @@
 describe('Delete functionality', function(){
-
-var d=require("./../Data/DeleteData.js");
+	
+var r=require("./../PageObjects/RandomStoreGeneration.js");
 var obj=require("./../PageObjects/DeleteObjects.js");	
 var EC = protractor.ExpectedConditions;
 	
 function deleteItem()
 {
-	obj.filter.clear().sendKeys(d.Deleting.storeId); //Entering the id in Filter
+	random = r.id;
+		
+	obj.filter.clear().sendKeys(random); //Entering the id in Filter
 	browser.sleep(5000);
 	
 	obj.reload.click(); //Clicking on 'Reload' button
@@ -20,9 +22,9 @@ function deleteItem()
 			store.element(by.css("td:nth-child(2)")).getText().then(function(text)
 			{
 				
-				if(text==d.Deleting.storeId)
+				if(text==random)
 				{
-					console.log(text+ "Store id is found for performing delete operation");
+					console.log(text + " - Store id is found for performing delete operation");
 					
 					//clicking on Delete button of the added store
 					store.element(by.css("td:nth-child(8) mat-icon:nth-child(2)")).click();

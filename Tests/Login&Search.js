@@ -24,15 +24,25 @@ describe('Sapphire', function() {
 		browser.sleep(1000);
 		obj.signIn.click(); //Clicking on 'Sign in' button after entering password
 		browser.sleep(3000);
-		obj.yesButton.click(); //CLicking on 'Yes' button - 'Do this to reduce the number of times you are asked to sign in.'
+		obj.yesButton.click(); //Clicking on 'Yes' button - 'Do this to reduce the number of times you are asked to sign in.'
+		browser.sleep(5000);
+		
+		browser.getCurrentUrl().then(function (text) 
+		{
+			console.log(text);
+			if(text==d.LoginData.url1)
+			{
+				browser.get('https://test-int-sapphire.syndigo.com/dashboard');
+			}	
+		});
 		browser.sleep(3000);
-			
+	
 		obj.title.getText().then(function (text) {
 			console.log(text); //For Sapphire title
 		})
 		expect(obj.title.getText()).toEqual(d.LoginData.title); //Login successful
 		browser.sleep(3000);
-			
+
 	});
 	
 			
@@ -70,7 +80,7 @@ describe('Sapphire', function() {
 	
 	it('Opening client', function() {
 
-			browser.wait(EC.presenceOf(obj.viewClient),10000);
+			//browser.wait(EC.presenceOf(obj.viewClient),30000);
 			obj.viewClient.click(); //Clicking on 'View client' button
 				
 			// Switching to Client tab
@@ -96,8 +106,6 @@ describe('Sapphire', function() {
 					
 				})
 			}); 
-			
-			
 		
 	})
 		
